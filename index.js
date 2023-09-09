@@ -3,11 +3,16 @@ const http = require('http');
 
 const server = http.createServer((req, res) => {
   const {url: pathName} = req;
+  const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
+  const dataObj = JSON.parse(data)
 
-  if(pathName === '/overview' || pathName === 'overview'){
+  if(pathName === '/overview' || pathName === '/'){
     res.end("this is the overview")
   }else if(pathName === '/product'){
     res.end("this is the product")
+  }else if(pathName === '/api'){
+    res.writeHead(200, {'content-type': 'application/json'});
+    res.end(data)
   }else{
     res.writeHead(404, {
       'Content-type': 'text/html',
